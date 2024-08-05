@@ -1,36 +1,8 @@
-export const initialCards = [
-    {
-      name: "Архыз",
-      link: "https://pictures.s3.yandex.net/frontend-developer/cards-compressed/arkhyz.jpg",
-    },
-    {
-      name: "Челябинская область",
-      link: "https://pictures.s3.yandex.net/frontend-developer/cards-compressed/chelyabinsk-oblast.jpg",
-    },
-    {
-      name: "Иваново",
-      link: "https://pictures.s3.yandex.net/frontend-developer/cards-compressed/ivanovo.jpg",
-    },
-    {
-      name: "Камчатка",
-      link: "https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kamchatka.jpg",
-    },
-    {
-      name: "Холмогорский район",
-      link: "https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kholmogorsky-rayon.jpg",
-    },
-    {
-      name: "Байкал",
-      link: "https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg",
-    }
-];
+import { openPopupImage } from "./index.js";
 
 const cardTemplate = document.querySelector("#card-template").content;
-const popupImage = document.querySelector(".popup_type_image");
-const popupImageContent = popupImage.querySelector(".popup__content");
-const popupImageSrc = popupImageContent.querySelector(".popup__image");
 
-export function createCard(item, deleteCard, openPopupImage, likeCard) {
+export function createCard(item, deleteCard, likeCard) {
   const cardElement = cardTemplate.cloneNode(true);
   const imageCard = cardElement.querySelector(".card__image");
   const cardTitle = cardElement.querySelector(".card__title");
@@ -40,8 +12,8 @@ export function createCard(item, deleteCard, openPopupImage, likeCard) {
   cardTitle.textContent = item.name;
   imageCard.alt = item.name;
   delButton.addEventListener("click", deleteCard);
-  imageCard.addEventListener("click", openPopupImage);
   cardLikeButton.addEventListener("click", likeCard);
+  imageCard.addEventListener("click", () => openPopupImage(item));
   return cardElement;
 }
 
@@ -54,10 +26,3 @@ export function deleteCard(event) {
   const card = event.target.closest(".card");
   card.remove();
 }
-
-export function openPopupImage(event) {
-  event.preventDefault();
-  popupImage.classList.add("popup_is-opened");
-  popupImageSrc.src = event.target.src;
-  return;
-  }
