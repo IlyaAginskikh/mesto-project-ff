@@ -3,12 +3,10 @@ import { initialCards } from "./initialCards.js";
 import { createCard, deleteCard, likeCard } from "./cards.js";
 import { openPopup, closePopup } from "./modal.js";
 
-//DOM
 const popups = document.querySelectorAll(".popup");
 const conteiner = document.querySelector(".places__list");
 const popupEditOpen = document.querySelector(".profile__edit-button");
 const popupCardOpen = document.querySelector(".profile__add-button");
-
 const popupEdit = document.querySelector(".popup_type_edit");
 const popupCard = document.querySelector(".popup_type_new-card");
 const popupImage = document.querySelector(".popup_type_image");
@@ -48,6 +46,7 @@ function openPopupImage(item) {
 }
 
 popups.forEach((popup) => {
+  popup.classList.add("popup_is-animated");
   popup.addEventListener("mousedown", (evt) => {
     if (evt.target.classList.contains("popup_is-opened")) {
       closePopup(popup);
@@ -57,10 +56,6 @@ popups.forEach((popup) => {
     }
   });
 });
-
-popupEdit.classList.add("popup_is-animated");
-popupCard.classList.add("popup_is-animated");
-popupImage.classList.add("popup_is-animated");
 
 function handleProfileFormSubmit(evt) {
   evt.preventDefault();
