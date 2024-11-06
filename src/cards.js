@@ -15,6 +15,8 @@ export function createCard(
   const delButton = cardElement.querySelector(".card__delete-button");
   const cardLikeButton = cardElement.querySelector(".card__like-button");
   const cardLikeNamber = cardElement.querySelector(".card_number_likes");
+  const card = cardElement.querySelector(".card");
+
   cardLikeNamber.textContent = item.likes.length;
   if (item.owner._id != dataProfile._id) {
     delButton.remove();
@@ -28,8 +30,8 @@ export function createCard(
   imageCard.src = item.link;
   cardTitle.textContent = item.name;
   imageCard.alt = item.name;
-  delButton.addEventListener("click", () => deleteInitialCard(item._id));
-  delButton.addEventListener("click", deleteCard);
+  delButton.addEventListener("click", () => deleteCard(item._id, card));
+
   cardLikeButton.addEventListener("click", () =>
     likeCard(cardLikeButton, cardLikeNamber, item, dataProfile)
   );
@@ -37,21 +39,28 @@ export function createCard(
   return cardElement;
 }
 
-export function deleteCard(event) {
-  const card = event.target.closest(".card");
-  card.remove();
+export function deleteCard(cardId, cardElem) {
+  deleteInitialCard(cardId)
+    .then(() => {
+      cardElem.remove();
+    })
+    .catch((err) => console.log(`Ошибка ${err}`));
 }
 
 export function likeCard(cardLikeButton, cardLikeButtonCounter, cardData) {
   const cardID = cardData._id;
   cardLikeButton.classList.toggle("card__like-button_is-active");
   if (cardLikeButton.classList.contains("card__like-button_is-active")) {
-    putLikeCard(cardID).then((res) => {
-      cardLikeButtonCounter.textContent = res.likes.length;
-    });
+    putLikeCard(cardID)
+      .then((res) => {
+        cardLikeButtonCounter.textContent = res.likes.length;
+      })
+      .catch((err) => console.log(`Ошибка ${err}`));
   } else {
-    deleteLikeCard(cardID).then((res) => {
-      cardLikeButtonCounter.textContent = res.likes.length;
-    });
+    deleteLikeCard(cardID)
+      .then((res) => {
+        cardLikeButtonCounter.textContent = res.likes.length;
+      })
+      .catch((err) => console.log(`Ошибка ${err}`));
   }
 }

@@ -10,102 +10,101 @@ export const getInitialCards = () => {
   return fetch(`${config.baseUrl}/cards`, {
     method: "GET",
     headers: config.headers,
-  })
-    .then((res) => {
-      if (res.ok) {
-        return res.json();
-      } else {
-        return Promise.reject(res.status);
-      }
-    })
-    .catch((err) => console.log(`Ошибка ${err}`));
+  }).then((res) => {
+    if (res.ok) {
+      return res.json();
+    } else {
+      return Promise.reject(res.status);
+    }
+  });
 };
 
 export const getDataProfile = () => {
   return fetch(`${config.baseUrl}/users/me`, {
     method: "GET",
     headers: config.headers,
-  })
-    .then((res) => {
-      if (res.ok) {
-        return res.json();
-      } else {
-        return Promise.reject(res.status);
-      }
-    })
-    .catch((err) => console.log(`Ошибка ${err}`));
+  }).then((res) => {
+    if (res.ok) {
+      return res.json();
+    } else {
+      return Promise.reject(res.status);
+    }
+  });
 };
 
-export const patchEditProfile = () => {
+export const patchEditProfile = (nameValue, aboutValue) => {
   const data = {
-    name: document.querySelector(".popup__input_type_name").value,
-    about: document.querySelector(".popup__input_type_description").value,
+    name: nameValue,
+    about: aboutValue,
   };
   return fetch(`${config.baseUrl}/users/me`, {
     method: "PATCH",
     headers: config.headers,
     body: JSON.stringify(data),
-  }).catch((err) => console.log(`Ошибка ${err}`));
+  }).then((res) => {
+    if (res.ok) {
+      return res.json();
+    } else {
+      return Promise.reject(res.status);
+    }
+  });
 };
 
-export const postNewCard = () => {
+export const postNewCard = (cardValue, linkValue) => {
   const data = {
-    name: document.querySelector(".popup__input_type_card-name").value,
-    link: document.querySelector(".popup__input_type_url").value,
+    name: cardValue,
+    link: linkValue,
   };
   return fetch(`${config.baseUrl}/cards`, {
     method: "POST",
     headers: config.headers,
     body: JSON.stringify(data),
-  })
-    .then((res) => {
-      if (res.ok) {
-        return res.json();
-      } else {
-        return Promise.reject(res.status);
-      }
-    })
-    .catch((err) => console.log(`Ошибка ${err}`));
+  }).then((res) => {
+    if (res.ok) {
+      return res.json();
+    } else {
+      return Promise.reject(res.status);
+    }
+  });
 };
 
 export const putLikeCard = (cardID) => {
   return fetch(`${config.baseUrl}/cards/likes/${cardID}`, {
     method: "PUT",
     headers: config.headers,
-  })
-    .then((res) => {
-      if (res.ok) {
-        return res.json();
-      } else {
-        return Promise.reject(res.status);
-      }
-    })
-    .catch((err) => console.log(`Ошибка ${err}`));
+  }).then((res) => {
+    if (res.ok) {
+      return res.json();
+    } else {
+      return Promise.reject(res.status);
+    }
+  });
 };
 
 export const deleteInitialCard = (itemID) => {
-  fetch(`https://nomoreparties.co/v1/wff-cohort-25/cards/${itemID}`, {
+  return fetch(`https://nomoreparties.co/v1/wff-cohort-25/cards/${itemID}`, {
     method: "DELETE",
-    headers: {
-      authorization: "3b58d5d8-f904-448a-a266-c5fe05324d98",
-      "Content-Type": "application/json",
-    },
-  }).catch((err) => console.log(`Ошибка ${err}`));
+    headers: config.headers,
+  }).then((res) => {
+    if (res.ok) {
+      return res.json();
+    } else {
+      return Promise.reject(res.status);
+    }
+  });
 };
 
 export const deleteLikeCard = (cardID) => {
   return fetch(`${config.baseUrl}/cards/likes/${cardID}`, {
     method: "DELETE",
     headers: config.headers,
-  })
-    .then((res) => {
-      if (res.ok) {
-        return res.json();
-      } else {
-        return Promise.reject(res.status);
-      }
-    })
-    .catch((err) => console.log(`Ошибка ${err}`));
+  }).then((res) => {
+    if (res.ok) {
+      return res.json();
+    } else {
+      return Promise.reject(res.status);
+    }
+  });
 };
 
 export const patchAvatar = () => {
@@ -116,5 +115,11 @@ export const patchAvatar = () => {
     method: "PATCH",
     headers: config.headers,
     body: JSON.stringify(data),
-  }).catch((err) => console.log(`Ошибка ${err}`));
+  }).then((res) => {
+    if (res.ok) {
+      return res.json();
+    } else {
+      return Promise.reject(res.status);
+    }
+  });
 };
