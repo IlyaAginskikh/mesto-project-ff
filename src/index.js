@@ -33,10 +33,11 @@ const profileTitle = document.querySelector(".profile__title");
 const profileDescription = document.querySelector(".profile__description");
 const profileImage = document.querySelector(".profile__image");
 const formCardElement = popupCard.querySelector(".popup__form");
-
 const cardPopupButton = popupForm.querySelector(".popup__button");
 const avatarPopupButton = popupAvatar.querySelector(".popup__button");
 const editPopupButton = profileForm.querySelector(".popup__button");
+const cardValue = document.querySelector(".popup__input_type_card-name").value;
+const linkValue = document.querySelector(".popup__input_type_url").value;
 
 const validationConfig = {
   formSelector: ".popup__form",
@@ -53,10 +54,10 @@ let userId;
 
 Promise.all([getInitialCards(), getDataProfile()])
   .then(([getCard, dataProfile]) => {
-    userId = dataProfile;
+    userId = dataProfile._id;
     getCard.forEach((item) => {
       conteiner.append(
-        createCard(item, dataProfile, deleteCard, likeCard, openPopupImage)
+        createCard(item, userId, deleteCard, likeCard, openPopupImage)
       );
     });
     profileTitle.textContent = dataProfile.name;
@@ -106,12 +107,12 @@ function handleProfileFormSubmit(evt) {
     .then(() => {
       profileTitle.textContent = nameInput.value;
       profileDescription.textContent = aboutInput.value;
+      closePopup(popupEdit);
+      profileForm.reset();
     })
     .catch((err) => console.log(`Ошибка ${err}`))
     .finally(() => {
       editPopupButton.textContent = "Сохранить";
-      profileForm.reset();
-      closePopup(popupEdit);
     });
 }
 
@@ -121,20 +122,16 @@ function handleAvatarFormSubmit(evt) {
   patchAvatar()
     .then(() => {
       profileImage.style.backgroundImage = `url(${avatarInput.value})`;
+      avatarForm.reset();
+      closePopup(popupAvatar);
     })
     .catch((err) => console.log(`Ошибка ${err}`))
     .finally(() => {
       avatarPopupButton.textContent = "Сохранить";
-      avatarForm.reset();
-      closePopup(popupAvatar);
     });
 }
 
 function addNewCardSubmit(evt) {
-  const cardValue = document.querySelector(
-    ".popup__input_type_card-name"
-  ).value;
-  const linkValue = document.querySelector(".popup__input_type_url").value;
   evt.preventDefault();
   cardPopupButton.textContent = "Сохранение...";
   postNewCard(cardValue, linkValue)
@@ -143,12 +140,12 @@ function addNewCardSubmit(evt) {
         createCard(dataNewCard, userId, deleteCard, likeCard, openPopupImage),
         true
       );
+      formCardElement.reset();
+      closePopup(popupCard);
     })
     .catch((err) => console.log(`Ошибка ${err}`))
     .finally(() => {
       cardPopupButton.textContent = "Сохранить";
-      formCardElement.reset();
-      closePopup(popupCard);
     });
   clearValidation(popupCard, validationConfig);
 }
