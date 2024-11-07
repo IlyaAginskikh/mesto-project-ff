@@ -47,14 +47,14 @@ export function likeCard(cardLikeButton, cardLikeButtonCounter, cardData) {
     putLikeCard(cardID)
       .then((res) => {
         cardLikeButtonCounter.textContent = res.likes.length;
-        cardLikeButton.classList.toggle("card__like-button_is-active");
+        cardLikeButton.classList.add("card__like-button_is-active");
       })
       .catch((err) => console.log(`Ошибка ${err}`));
   } else {
     deleteLikeCard(cardID)
       .then((res) => {
         cardLikeButtonCounter.textContent = res.likes.length;
-        cardLikeButton.classList.toggle("card__like-button_is-active");
+        cardLikeButton.classList.remove("card__like-button_is-active");
       })
       .catch((err) => console.log(`Ошибка ${err}`));
   }
