@@ -2,13 +2,7 @@ import { putLikeCard, deleteLikeCard, deleteInitialCard } from "./api.js";
 
 const cardTemplate = document.querySelector("#card-template").content;
 
-export function createCard(
-  item,
-  userId,
-  deleteCard,
-  likeCard,
-  openPopupImage
-) {
+export function createCard(item, userId, deleteCard, likeCard, openPopupImage) {
   const cardElement = cardTemplate.cloneNode(true);
   const imageCard = cardElement.querySelector(".card__image");
   const cardTitle = cardElement.querySelector(".card__title");

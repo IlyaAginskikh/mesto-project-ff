@@ -25,7 +25,8 @@ const imageCaption = document.querySelector(".popup__caption");
 const profileForm = popupEdit.querySelector(".popup__form");
 const avatarForm = popupAvatar.querySelector(".popup__form");
 const popupForm = popupCard.querySelector(".popup__form");
-
+const cardValue = popupForm.querySelector(".popup__input_type_card-name");
+const linkValue = popupForm.querySelector(".popup__input_type_url");
 const nameInput = profileForm.querySelector(".popup__input_type_name");
 const avatarInput = avatarForm.querySelector(".popup__input_avatar_url");
 const aboutInput = profileForm.querySelector(".popup__input_type_description");
@@ -36,8 +37,6 @@ const formCardElement = popupCard.querySelector(".popup__form");
 const cardPopupButton = popupForm.querySelector(".popup__button");
 const avatarPopupButton = popupAvatar.querySelector(".popup__button");
 const editPopupButton = profileForm.querySelector(".popup__button");
-const cardValue = document.querySelector(".popup__input_type_card-name").value;
-const linkValue = document.querySelector(".popup__input_type_url").value;
 
 const validationConfig = {
   formSelector: ".popup__form",
@@ -134,7 +133,7 @@ function handleAvatarFormSubmit(evt) {
 function addNewCardSubmit(evt) {
   evt.preventDefault();
   cardPopupButton.textContent = "Сохранение...";
-  postNewCard(cardValue, linkValue)
+  postNewCard(cardValue.value, linkValue.value)
     .then((dataNewCard) => {
       addCard(
         createCard(dataNewCard, userId, deleteCard, likeCard, openPopupImage),
